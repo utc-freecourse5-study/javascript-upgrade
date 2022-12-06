@@ -13,6 +13,10 @@ const InputView = {
       callback
     );
   },
+
+  readRetryOrQuit(callback) {
+    Console.readLine('강화 도전 여부를 입력해주세요. (도전: Y, 중단: N)\n', callback);
+  },
 };
 
 module.exports = InputView;

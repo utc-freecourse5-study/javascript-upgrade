@@ -1,10 +1,10 @@
-const generateMiniGameNumber = require('./generateMiniGameNumber');
 const InputView = require('./InputView');
 const OutputView = require('./OutputView');
 const UpgradeModel = require('./UpgradeModel');
 const UpgradeUtils = require('./UpgradeUtils');
 const HandleValidation = require('./utils/handleValidation');
 const Validation = require('./utils/Validation');
+const { Console } = require('@woowacourse/mission-utils');
 
 class UpgradeGame {
   #upgradeModel;
@@ -50,19 +50,24 @@ class UpgradeGame {
   }
 
   handleOddAndEven(inputMiniGame) {
-    return this.#upgradeModel.isOddAndEven(inputMiniGame)
-      ? this.upgradeGameResult('성공', 10)
-      : this.upgradeGameResult('실패', 0);
+    if (this.#upgradeModel.isOddAndEven(inputMiniGame)) {
+      OutputView.printOddAndEvenSuccess(this.#upgradeModel.getRandomNumber(), 10);
+      return this.upgradeGameResult(10);
+    }
+    OutputView.printOddAndEvenFail(this.#upgradeModel.getRandomNumber(), 0);
+    return this.upgradeGameResult(0);
   }
 
   handleMiniGameNumber(inputMiniGame) {
-    this.#upgradeModel.isCorrectMiniGameNumber(Number(inputMiniGame))
-      ? this.upgradeGameResult('성공', 50)
-      : this.upgradeGameResult('실패', 0);
+    if (this.#upgradeModel.isCorrectMiniGameNumber(Number(inputMiniGame))) {
+      OutputView.printGuessingNumbersSuccess(this.#upgradeModel.getRandomNumber(), 50);
+      return this.upgradeGameResult(50);
+    }
+    OutputView.printGuessingNumbersFail(this.#upgradeModel.getRandomNumber(), 0);
+    return this.upgradeGameResult(0);
   }
 
-  upgradeGameResult(result, bonus) {
-    OutputView.printRandomGameNumber(this.#upgradeModel.getRandomNumber(), result, bonus);
+  upgradeGameResult(bonus) {
     const pro = this.#upgradeModel.getUpgradeProbability(bonus);
     const upgradeResult = UpgradeUtils.isUpgraded(pro);
 
@@ -72,6 +77,25 @@ class UpgradeGame {
       return this.requstRetryOrQuit();
     }
     OutputView.printResult('실패', pro);
+    return this.requstRetryOrQuit();
+  }
+
+  requstRetryOrQuit() {
+    OutputView.printCurrentUpgradePhase(this.#upgradeModel.getCurrentUpgradePhase());
+    InputView.readRetryOrQuit(this.checkRetryOrQuit);
+  }
+
+  checkRetryOrQuit = (selectChallenge) => {
+    if (!HandleValidation.checkValidate(Validation.isTryChallenge, selectChallenge)) {
+      return this.requestChallengeCommand();
+    }
+    this.handleRetryOrQuit(selectChallenge);
+  };
+
+  handleRetryOrQuit(selectChallenge) {
+    if (selectChallenge === 'Y') return this.requestMiniGameInput();
+    OutputView.printFinalUpgradePhase(this.#upgradeModel.getCurrentUpgradePhase());
+    return Console.close();
   }
 }
 
