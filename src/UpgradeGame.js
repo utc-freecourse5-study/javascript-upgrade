@@ -17,83 +17,85 @@ class UpgradeGame {
 
   start() {
     OutputView.printCurrentUpgradePhase(this.#upgradeModel.getCurrentUpgradePhase());
-    this.requestChallengeCommand();
+    this.#requestChallengeCommand();
   }
 
-  requestChallengeCommand() {
-    InputView.readChallengeCommand(this.checkChllengeCommand);
+  #requestChallengeCommand() {
+    InputView.readChallengeCommand(this.#checkChllengeCommand);
   }
 
-  checkChllengeCommand = (selectChallenge) => {
+  #checkChllengeCommand = (selectChallenge) => {
     if (!checkValidate(Validation.isTryChallenge, selectChallenge)) {
-      return this.requestChallengeCommand();
+      return this.#requestChallengeCommand();
     }
 
-    this.requestMiniGameInput();
+    this.#requestMiniGameInput();
   };
 
-  requestMiniGameInput() {
-    InputView.readMiniGameInput(this.checkMiniGameInput);
+  #requestMiniGameInput() {
+    InputView.readMiniGameInput(this.#checkMiniGameInput);
   }
 
-  checkMiniGameInput = (inputMiniGame) => {
+  #checkMiniGameInput = (inputMiniGame) => {
     if (!checkValidate(Validation.checkMiniGameInput, inputMiniGame)) {
-      return this.requestMiniGameInput();
+      return this.#requestMiniGameInput();
     }
 
-    this.handleMiniGameInput(inputMiniGame);
+    this.#handleMiniGameInput(inputMiniGame);
   };
 
-  handleMiniGameInput(inputMiniGame) {
+  #handleMiniGameInput(inputMiniGame) {
     this.#upgradeModel.makeRandomNumber();
-    if (inputMiniGame === 'O' || inputMiniGame === 'E') return this.handleOddAndEven(inputMiniGame);
-    return this.handleMiniGameNumber(inputMiniGame);
+
+    return inputMiniGame === 'O' || inputMiniGame === 'E'
+      ? this.#handleOddAndEven(inputMiniGame)
+      : this.#handleMiniGameNumber(inputMiniGame);
   }
 
-  handleOddAndEven(inputMiniGame) {
+  #handleOddAndEven(inputMiniGame) {
     return this.#upgradeModel.isOddAndEven(inputMiniGame)
-      ? this.handleMiniGameResult(true, '홀/짝', 10)
-      : this.handleMiniGameResult(false, '홀/짝', 0);
+      ? this.#handleMiniGameResult(true, '홀/짝', 10)
+      : this.#handleMiniGameResult(false, '홀/짝', 0);
   }
 
-  handleMiniGameNumber(inputMiniGame) {
+  #handleMiniGameNumber(inputMiniGame) {
     return this.#upgradeModel.isCorrectMiniGameNumber(Number(inputMiniGame))
-      ? this.handleMiniGameResult(true, '숫자', 50)
-      : this.handleMiniGameResult(false, '숫자', 0);
+      ? this.#handleMiniGameResult(true, '숫자', 50)
+      : this.#handleMiniGameResult(false, '숫자', 0);
   }
 
-  handleMiniGameResult(result, type, bonus) {
+  #handleMiniGameResult(result, type, bonus) {
     result
       ? OutputView.printMiniGameSuccess(type, this.#upgradeModel.getRandomNumber(), bonus)
       : OutputView.printMiniGameFail(type, this.#upgradeModel.getRandomNumber());
-    return this.upgradeGameResult(bonus);
+    return this.#upgradeGameResult(bonus);
   }
 
-  upgradeGameResult(bonus) {
+  #upgradeGameResult(bonus) {
     const pro = this.#upgradeModel.addBonusProbability(bonus);
 
     if (UpgradeUtils.isUpgraded(pro)) {
       this.#upgradeModel.addUpgradePhase();
-      return OutputView.printResult('성공', pro) || this.requstRetryOrQuit();
+      return OutputView.printResult('성공', pro) || this.#requstRetryOrQuit();
     }
-    return OutputView.printResult('실패', pro) || this.requstRetryOrQuit();
+    return OutputView.printResult('실패', pro) || this.#requstRetryOrQuit();
   }
 
-  requstRetryOrQuit() {
+  #requstRetryOrQuit() {
     OutputView.printCurrentUpgradePhase(this.#upgradeModel.getCurrentUpgradePhase());
-    InputView.readRetryOrQuit(this.checkRetryOrQuit);
+    InputView.readRetryOrQuit(this.#checkRetryOrQuit);
   }
 
-  checkRetryOrQuit = (selectChallenge) => {
+  #checkRetryOrQuit = (selectChallenge) => {
     if (!checkValidate(Validation.isTryChallenge, selectChallenge)) {
       return this.requestChallengeCommand();
     }
 
-    this.handleRetryOrQuit(selectChallenge);
+    this.#handleRetryOrQuit(selectChallenge);
   };
 
-  handleRetryOrQuit(selectChallenge) {
-    if (selectChallenge === 'Y') return this.requestMiniGameInput();
+  #handleRetryOrQuit(selectChallenge) {
+    if (selectChallenge === 'Y') return this.#requestMiniGameInput();
 
     OutputView.printFinalUpgradePhase(this.#upgradeModel.getCurrentUpgradePhase());
     return Console.close();
