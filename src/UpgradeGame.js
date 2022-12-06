@@ -51,21 +51,22 @@ class UpgradeGame {
   }
 
   handleOddAndEven(inputMiniGame) {
-    if (this.#upgradeModel.isOddAndEven(inputMiniGame)) {
-      OutputView.printMiniGameSuccess('홀/짝', this.#upgradeModel.getRandomNumber(), 10);
-      return this.upgradeGameResult(10);
-    }
-    OutputView.printMiniGameFail('홀/짝', this.#upgradeModel.getRandomNumber());
-    return this.upgradeGameResult(0);
+    return this.#upgradeModel.isOddAndEven(inputMiniGame)
+      ? this.handleMiniGameResult(true, '홀/짝', 10)
+      : this.handleMiniGameResult(false, '홀/짝', 0);
   }
 
   handleMiniGameNumber(inputMiniGame) {
-    if (this.#upgradeModel.isCorrectMiniGameNumber(Number(inputMiniGame))) {
-      OutputView.printMiniGameSuccess('숫자', this.#upgradeModel.getRandomNumber(), 50);
-      return this.upgradeGameResult(50);
-    }
-    OutputView.printMiniGameFail('숫자', this.#upgradeModel.getRandomNumber());
-    return this.upgradeGameResult(0);
+    return this.#upgradeModel.isCorrectMiniGameNumber(Number(inputMiniGame))
+      ? this.handleMiniGameResult(true, '숫자', 50)
+      : this.handleMiniGameResult(false, '숫자', 0);
+  }
+
+  handleMiniGameResult(result, type, bonus) {
+    result
+      ? OutputView.printMiniGameSuccess(type, this.#upgradeModel.getRandomNumber(), bonus)
+      : OutputView.printMiniGameFail(type, this.#upgradeModel.getRandomNumber());
+    return this.upgradeGameResult(bonus);
   }
 
   upgradeGameResult(bonus) {
