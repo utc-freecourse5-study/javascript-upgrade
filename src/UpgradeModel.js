@@ -17,6 +17,12 @@ class UpgradeModel {
     this.#upgradePhase += 1;
   }
 
+  addBonusProbability(bonus) {
+    const upgradeProbability = [80, 70, 60, 50, 45, 40, 35, 30, 20, 10];
+    const sumBonus = upgradeProbability[this.#upgradePhase] + bonus;
+    return sumBonus >= 100 ? 100 : sumBonus;
+  }
+
   makeRandomNumber() {
     this.#randomNumber = generateMiniGameNumber();
   }
@@ -35,12 +41,6 @@ class UpgradeModel {
   isCorrectMiniGameNumber(inputMiniGame) {
     if (inputMiniGame === this.#randomNumber) return true;
     return false;
-  }
-
-  getUpgradeProbability(bonus) {
-    const upgradeProbability = [80, 70, 60, 50, 45, 40, 35, 30, 20, 10];
-    const sumBonus = upgradeProbability[this.#upgradePhase] + bonus;
-    return sumBonus >= 100 ? 100 : sumBonus;
   }
 }
 
