@@ -25,6 +25,17 @@ class UpgradeGame {
     if (!HandleValidation.checkValidate(Validation.isTryChallenge, selectChallenge)) {
       return this.requestChallengeCommand();
     }
+    this.requestMiniGameInput();
+  };
+
+  requestMiniGameInput() {
+    InputView.readMiniGameInput(this.checkMiniGameInput);
+  }
+
+  checkMiniGameInput = (inputMiniGame) => {
+    if (!HandleValidation.checkValidate(Validation.checkMiniGameInput, inputMiniGame)) {
+      return this.requestMiniGameInput();
+    }
   };
 }
 

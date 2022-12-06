@@ -7,7 +7,12 @@ const InputView = {
   },
 
   // 미니 게임 숫자 혹은 커맨드
-  readMiniGameInput() {},
+  readMiniGameInput(callback) {
+    Console.readLine(
+      '\n미니 게임을 위한 숫자 또는 홀/짝 커맨드를 입력해주세요. (숫자: 0 ~ 9 사이의 수, 홀: O, 짝: E)\n',
+      callback
+    );
+  },
 };
 
 module.exports = InputView;
