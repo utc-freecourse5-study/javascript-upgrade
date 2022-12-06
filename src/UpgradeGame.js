@@ -2,8 +2,9 @@ const InputView = require('./InputView');
 const OutputView = require('./OutputView');
 const UpgradeModel = require('./UpgradeModel');
 const UpgradeUtils = require('./UpgradeUtils');
-const HandleValidation = require('./utils/handleValidation');
+
 const Validation = require('./utils/Validation');
+const checkValidate = require('./utils/checkValidate');
 const { Console } = require('@woowacourse/mission-utils');
 
 class UpgradeGame {
@@ -24,7 +25,7 @@ class UpgradeGame {
   }
 
   checkChllengeCommand = (selectChallenge) => {
-    if (!HandleValidation.checkValidate(Validation.isTryChallenge, selectChallenge)) {
+    if (!checkValidate(Validation.isTryChallenge, selectChallenge)) {
       return this.requestChallengeCommand();
     }
     this.requestMiniGameInput();
@@ -35,7 +36,7 @@ class UpgradeGame {
   }
 
   checkMiniGameInput = (inputMiniGame) => {
-    if (!HandleValidation.checkValidate(Validation.checkMiniGameInput, inputMiniGame)) {
+    if (!checkValidate(Validation.checkMiniGameInput, inputMiniGame)) {
       return this.requestMiniGameInput();
     }
     this.handleMiniGameInput(inputMiniGame);
@@ -86,7 +87,7 @@ class UpgradeGame {
   }
 
   checkRetryOrQuit = (selectChallenge) => {
-    if (!HandleValidation.checkValidate(Validation.isTryChallenge, selectChallenge)) {
+    if (!checkValidate(Validation.isTryChallenge, selectChallenge)) {
       return this.requestChallengeCommand();
     }
     this.handleRetryOrQuit(selectChallenge);
