@@ -28,6 +28,7 @@ class UpgradeGame {
     if (!checkValidate(Validation.isTryChallenge, selectChallenge)) {
       return this.requestChallengeCommand();
     }
+
     this.requestMiniGameInput();
   };
 
@@ -39,14 +40,13 @@ class UpgradeGame {
     if (!checkValidate(Validation.checkMiniGameInput, inputMiniGame)) {
       return this.requestMiniGameInput();
     }
+
     this.handleMiniGameInput(inputMiniGame);
   };
 
   handleMiniGameInput(inputMiniGame) {
     this.#upgradeModel.makeRandomNumber();
-    if (inputMiniGame === 'O' || inputMiniGame === 'E') {
-      return this.handleOddAndEven(inputMiniGame);
-    }
+    if (inputMiniGame === 'O' || inputMiniGame === 'E') return this.handleOddAndEven(inputMiniGame);
     return this.handleMiniGameNumber(inputMiniGame);
   }
 
@@ -69,16 +69,13 @@ class UpgradeGame {
   }
 
   upgradeGameResult(bonus) {
-    const pro = this.#upgradeModel.getUpgradeProbability(bonus);
-    const upgradeResult = UpgradeUtils.isUpgraded(pro);
+    const pro = this.#upgradeModel.addBonusProbability(bonus);
 
-    if (upgradeResult) {
+    if (UpgradeUtils.isUpgraded(pro)) {
       this.#upgradeModel.addUpgradePhase();
-      OutputView.printResult('성공', pro);
-      return this.requstRetryOrQuit();
+      return OutputView.printResult('성공', pro) || this.requstRetryOrQuit();
     }
-    OutputView.printResult('실패', pro);
-    return this.requstRetryOrQuit();
+    return OutputView.printResult('실패', pro) || this.requstRetryOrQuit();
   }
 
   requstRetryOrQuit() {
@@ -90,11 +87,13 @@ class UpgradeGame {
     if (!checkValidate(Validation.isTryChallenge, selectChallenge)) {
       return this.requestChallengeCommand();
     }
+
     this.handleRetryOrQuit(selectChallenge);
   };
 
   handleRetryOrQuit(selectChallenge) {
     if (selectChallenge === 'Y') return this.requestMiniGameInput();
+
     OutputView.printFinalUpgradePhase(this.#upgradeModel.getCurrentUpgradePhase());
     return Console.close();
   }
