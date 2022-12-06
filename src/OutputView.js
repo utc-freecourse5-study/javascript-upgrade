@@ -8,6 +8,10 @@ const OutputView = {
   printCurrentUpgradePhase(phase) {
     Console.print(`현재 강화 등급: +${phase}강\n`);
   },
+
+  printErrorMessage(error) {
+    Console.print(error);
+  },
 };
 
 module.exports = OutputView;
