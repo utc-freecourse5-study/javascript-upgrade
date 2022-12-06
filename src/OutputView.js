@@ -13,24 +13,14 @@ const OutputView = {
     Console.print(`\n최종 강화 결과: +${phase}강`);
   },
 
-  printOddAndEvenSuccess(randomNum, bonus) {
+  printMiniGameSuccess(type, randomNum, bonus) {
     Console.print(
-      `\n미니 게임 랜덤 수: ${randomNum} --> 홀/짝 맞추기 성공! 강화 확률 ${bonus}% 증가!`
+      `\n미니 게임 랜덤 수: ${randomNum} --> ${type} 맞추기 성공! 강화 확률 ${bonus}% 증가!`
     );
   },
 
-  printOddAndEvenFail(randomNum) {
-    Console.print(`\n미니 게임 랜덤 수: ${randomNum} --> 홀/짝 맞추기 실패!`);
-  },
-
-  printGuessingNumbersSuccess(randomNum, bonus) {
-    Console.print(
-      `\n미니 게임 랜덤 수: ${randomNum} --> 숫자 맞추기 성공! 강화 확률 ${bonus}% 증가!`
-    );
-  },
-
-  printGuessingNumbersFail(randomNum) {
-    Console.print(`\n미니 게임 랜덤 수: ${randomNum} --> 숫자 맞추기 실패!`);
+  printMiniGameFail(type, randomNum) {
+    Console.print(`\n미니 게임 랜덤 수: ${randomNum} --> ${type} 맞추기 실패!`);
   },
 
   printResult(result, bonus) {

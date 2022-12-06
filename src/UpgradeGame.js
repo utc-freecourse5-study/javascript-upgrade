@@ -52,19 +52,19 @@ class UpgradeGame {
 
   handleOddAndEven(inputMiniGame) {
     if (this.#upgradeModel.isOddAndEven(inputMiniGame)) {
-      OutputView.printOddAndEvenSuccess(this.#upgradeModel.getRandomNumber(), 10);
+      OutputView.printMiniGameSuccess('홀/짝', this.#upgradeModel.getRandomNumber(), 10);
       return this.upgradeGameResult(10);
     }
-    OutputView.printOddAndEvenFail(this.#upgradeModel.getRandomNumber(), 0);
+    OutputView.printMiniGameFail('홀/짝', this.#upgradeModel.getRandomNumber());
     return this.upgradeGameResult(0);
   }
 
   handleMiniGameNumber(inputMiniGame) {
     if (this.#upgradeModel.isCorrectMiniGameNumber(Number(inputMiniGame))) {
-      OutputView.printGuessingNumbersSuccess(this.#upgradeModel.getRandomNumber(), 50);
+      OutputView.printMiniGameSuccess('숫자', this.#upgradeModel.getRandomNumber(), 50);
       return this.upgradeGameResult(50);
     }
-    OutputView.printGuessingNumbersFail(this.#upgradeModel.getRandomNumber(), 0);
+    OutputView.printMiniGameFail('숫자', this.#upgradeModel.getRandomNumber());
     return this.upgradeGameResult(0);
   }
 
