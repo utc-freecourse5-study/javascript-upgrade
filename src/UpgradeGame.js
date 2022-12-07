@@ -7,6 +7,7 @@ const Validation = require('./utils/Validation');
 const checkValidate = require('./utils/checkValidate');
 
 const { Console } = require('@woowacourse/mission-utils');
+const MiniGame = require('./MiniGame');
 
 class UpgradeGame {
   #upgradeModel;
@@ -42,43 +43,22 @@ class UpgradeGame {
       return this.#requestMiniGameInput();
     }
 
-    this.#handleMiniGameInput(inputMiniGame);
+    const bonus = new MiniGame(this.#upgradeModel).handleMiniGameInput(inputMiniGame);
+    this.#upgradeGameResult(bonus);
   };
-
-  #handleMiniGameInput(inputMiniGame) {
-    this.#upgradeModel.makeRandomNumber();
-
-    return inputMiniGame === 'O' || inputMiniGame === 'E'
-      ? this.#handleOddAndEven(inputMiniGame)
-      : this.#handleMiniGameNumber(inputMiniGame);
-  }
-
-  #handleOddAndEven(inputMiniGame) {
-    return this.#upgradeModel.isOddAndEven(inputMiniGame)
-      ? this.#handleMiniGameResult(true, '홀/짝', 10)
-      : this.#handleMiniGameResult(false, '홀/짝', 0);
-  }
-
-  #handleMiniGameNumber(inputMiniGame) {
-    return this.#upgradeModel.isCorrectMiniGameNumber(Number(inputMiniGame))
-      ? this.#handleMiniGameResult(true, '숫자', 50)
-      : this.#handleMiniGameResult(false, '숫자', 0);
-  }
-
-  #handleMiniGameResult(result, type, bonus) {
-    result
-      ? OutputView.printMiniGameSuccess(type, this.#upgradeModel.getRandomNumber(), bonus)
-      : OutputView.printMiniGameFail(type, this.#upgradeModel.getRandomNumber());
-    return this.#upgradeGameResult(bonus);
-  }
 
   #upgradeGameResult(bonus) {
     const probability = this.#upgradeModel.addBonusProbability(bonus);
+    const gameResult = UpgradeUtils.isUpgraded(probability);
+    gameResult ? this.#handleGameSuccess(probability) : this.#handleGameFail(probability);
+  }
 
-    if (UpgradeUtils.isUpgraded(probability)) {
-      this.#upgradeModel.addUpgradePhase();
-      return OutputView.printResult('성공', probability) || this.#requstRetryOrQuit();
-    }
+  #handleGameSuccess(probability) {
+    this.#upgradeModel.addUpgradePhase();
+    return OutputView.printResult('성공', probability) || this.#requstRetryOrQuit();
+  }
+
+  #handleGameFail(probability) {
     OutputView.printResult('실패', probability) || this.#handleFinish();
   }
 
