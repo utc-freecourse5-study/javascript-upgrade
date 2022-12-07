@@ -78,7 +78,7 @@ class UpgradeGame {
       this.#upgradeModel.addUpgradePhase();
       return OutputView.printResult('성공', pro) || this.#requstRetryOrQuit();
     }
-    return OutputView.printResult('실패', pro) || this.#requstRetryOrQuit();
+    OutputView.printResult('실패', pro) || this.#handleFinish();
   }
 
   #requstRetryOrQuit() {
@@ -96,7 +96,10 @@ class UpgradeGame {
 
   #handleRetryOrQuit(selectChallenge) {
     if (selectChallenge === 'Y') return this.#requestMiniGameInput();
+    this.#handleFinish();
+  }
 
+  #handleFinish() {
     OutputView.printFinalUpgradePhase(this.#upgradeModel.getCurrentUpgradePhase());
     return Console.close();
   }
