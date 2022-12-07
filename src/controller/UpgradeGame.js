@@ -66,7 +66,7 @@ class UpgradeGame {
 
   #requstRetryOrQuit() {
     OutputView.printCurrentUpgradePhase(this.#upgradeModel.getCurrentUpgradePhase());
-    InputView.readRetryOrQuit(this.#checkRetryOrQuit);
+    InputView.readChallengeCommand(this.#checkRetryOrQuit);
   }
 
   #checkRetryOrQuit = (selectChallenge) => {
