@@ -17,7 +17,7 @@ describe('UpgradeModel Test', () => {
 
   describe('사용자의 입력값에 따라 홀짝을 맞췄는지 여부 Test', () => {
     test('사용자의 입력값이 O일때 홀짝을 맞춘경우 test', () => {
-      mockRandoms([77]);
+      mockRandoms([7]);
 
       upgradeModel.makeRandomNumber();
 
@@ -26,16 +26,16 @@ describe('UpgradeModel Test', () => {
     });
 
     test('사용자의 입력값이 O일때 홀짝을 틀린경우 test', () => {
-      mockRandoms([77]);
+      mockRandoms([6]);
 
       upgradeModel.makeRandomNumber();
 
-      const result = upgradeModel.isOddAndEven('E');
+      const result = upgradeModel.isOddAndEven('O');
       expect(result).toBeFalsy();
     });
 
     test('사용자의 입력값이 E일때 홀짝을 맞춘경우 test', () => {
-      mockRandoms([76]);
+      mockRandoms([6]);
 
       upgradeModel.makeRandomNumber();
 
@@ -44,11 +44,11 @@ describe('UpgradeModel Test', () => {
     });
 
     test('사용자의 입력값이 E일때 홀짝을 틀린경우 test', () => {
-      mockRandoms([76]);
+      mockRandoms([7]);
 
       upgradeModel.makeRandomNumber();
 
-      const result = upgradeModel.isOddAndEven('O');
+      const result = upgradeModel.isOddAndEven('E');
       expect(result).toBeFalsy();
     });
   });
