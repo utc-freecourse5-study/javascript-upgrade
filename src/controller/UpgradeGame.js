@@ -9,6 +9,7 @@ const checkValidate = require('../utils/checkValidate');
 
 const { Console } = require('@woowacourse/mission-utils');
 const MiniGame = require('./MiniGame');
+const { GAME_RESULT, INPUT_VALUE } = require('../utils/constants');
 
 class UpgradeGame {
   #upgradeModel;
@@ -24,10 +25,10 @@ class UpgradeGame {
   }
 
   #requestChallengeCommand() {
-    InputView.readChallengeCommand(this.#checkChllengeCommand);
+    InputView.readChallengeCommand(this.#checkChallengeCommand);
   }
 
-  #checkChllengeCommand = (selectChallenge) => {
+  #checkChallengeCommand = (selectChallenge) => {
     if (!checkValidate(Validation.isTryChallenge, selectChallenge)) {
       return this.#requestChallengeCommand();
     }
@@ -56,11 +57,11 @@ class UpgradeGame {
 
   #handleGameSuccess(probability) {
     this.#upgradeModel.addUpgradePhase();
-    return OutputView.printResult('성공', probability) || this.#requstRetryOrQuit();
+    return OutputView.printResult(GAME_RESULT.success, probability) || this.#requstRetryOrQuit();
   }
 
   #handleGameFail(probability) {
-    OutputView.printResult('실패', probability) || this.#handleFinish();
+    OutputView.printResult(GAME_RESULT.fail, probability) || this.#handleFinish();
   }
 
   #requstRetryOrQuit() {
@@ -77,7 +78,7 @@ class UpgradeGame {
   };
 
   #handleRetryOrQuit(selectChallenge) {
-    if (selectChallenge === 'Y') return this.#requestMiniGameInput();
+    if (selectChallenge === INPUT_VALUE.challenge) return this.#requestMiniGameInput();
     this.#handleFinish();
   }
 

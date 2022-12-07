@@ -1,4 +1,5 @@
 const generateMiniGameNumber = require('../generateMiniGameNumber');
+const { UPGRADE_PROBABILITY, INPUT_VALUE } = require('../utils/constants');
 
 class UpgradeModel {
   #upgradePhase;
@@ -18,7 +19,7 @@ class UpgradeModel {
   }
 
   addBonusProbability(bonus) {
-    const upgradeProbability = [80, 70, 60, 50, 45, 40, 35, 30, 20, 10];
+    const upgradeProbability = UPGRADE_PROBABILITY;
     const sumBonus = upgradeProbability[this.#upgradePhase] + bonus;
     return sumBonus >= 100 ? 100 : sumBonus;
   }
@@ -32,10 +33,10 @@ class UpgradeModel {
   }
 
   isOddAndEven(inputMiniGame) {
-    if (inputMiniGame === 'O' && this.#randomNumber % 2 === 1) return true;
-    if (inputMiniGame === 'O' && this.#randomNumber % 2 === 0) return false;
-    if (inputMiniGame === 'E' && this.#randomNumber % 2 === 0) return true;
-    if (inputMiniGame === 'E' && this.#randomNumber % 2 === 1) return false;
+    if (inputMiniGame === INPUT_VALUE.odd && this.#randomNumber % 2 === 1) return true;
+    if (inputMiniGame === INPUT_VALUE.odd && this.#randomNumber % 2 === 0) return false;
+    if (inputMiniGame === INPUT_VALUE.even && this.#randomNumber % 2 === 0) return true;
+    if (inputMiniGame === INPUT_VALUE.even && this.#randomNumber % 2 === 1) return false;
   }
 
   isCorrectMiniGameNumber(inputMiniGame) {
