@@ -5,6 +5,7 @@ const UpgradeUtils = require('./UpgradeUtils');
 
 const Validation = require('./utils/Validation');
 const checkValidate = require('./utils/checkValidate');
+
 const { Console } = require('@woowacourse/mission-utils');
 
 class UpgradeGame {
@@ -72,13 +73,13 @@ class UpgradeGame {
   }
 
   #upgradeGameResult(bonus) {
-    const pro = this.#upgradeModel.addBonusProbability(bonus);
+    const probability = this.#upgradeModel.addBonusProbability(bonus);
 
-    if (UpgradeUtils.isUpgraded(pro)) {
+    if (UpgradeUtils.isUpgraded(probability)) {
       this.#upgradeModel.addUpgradePhase();
-      return OutputView.printResult('성공', pro) || this.#requstRetryOrQuit();
+      return OutputView.printResult('성공', probability) || this.#requstRetryOrQuit();
     }
-    OutputView.printResult('실패', pro) || this.#handleFinish();
+    OutputView.printResult('실패', probability) || this.#handleFinish();
   }
 
   #requstRetryOrQuit() {
