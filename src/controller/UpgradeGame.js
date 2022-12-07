@@ -20,8 +20,8 @@ class UpgradeGame {
   }
 
   start() {
-    OutputView.printCurrentUpgradePhase(this.#upgradeModel.getCurrentUpgradePhase());
-    this.#requestChallengeCommand();
+    const currentUpgradePhase = this.#upgradeModel.getCurrentUpgradePhase();
+    OutputView.printCurrentUpgradePhase(currentUpgradePhase) || this.#requestChallengeCommand();
   }
 
   #requestChallengeCommand() {
@@ -83,8 +83,8 @@ class UpgradeGame {
   }
 
   #handleFinish() {
-    OutputView.printFinalUpgradePhase(this.#upgradeModel.getCurrentUpgradePhase());
-    return Console.close();
+    const currentUpgradePhase = this.#upgradeModel.getCurrentUpgradePhase();
+    return OutputView.printFinalUpgradePhase(currentUpgradePhase) || Console.close();
   }
 }
 
