@@ -2,6 +2,7 @@ const INPUT_VALUE = Object.freeze({
   odd: 'O',
   even: 'E',
   challenge: 'Y',
+  quit: 'N',
 });
 
 const GAME_TYPE = Object.freeze({
@@ -22,10 +23,15 @@ const GAME_RESULT = Object.freeze({
 
 const UPGRADE_PROBABILITY = Object.freeze([80, 70, 60, 50, 45, 40, 35, 30, 20, 10]);
 
+const REGEXP = Object.freeze({
+  singleDigit: '^[0-9]+$',
+});
+
 module.exports = {
   INPUT_VALUE,
   GAME_TYPE,
   BONUS_PROBABILITY,
   GAME_RESULT,
   UPGRADE_PROBABILITY,
+  REGEXP,
 };
