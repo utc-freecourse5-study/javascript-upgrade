@@ -1,10 +1,11 @@
-const InputView = require('./InputView');
-const OutputView = require('./OutputView');
-const UpgradeModel = require('./UpgradeModel');
-const UpgradeUtils = require('./UpgradeUtils');
+const InputView = require('../view/InputView');
+const OutputView = require('../view/OutputView');
 
-const Validation = require('./utils/Validation');
-const checkValidate = require('./utils/checkValidate');
+const UpgradeUtils = require('../UpgradeUtils');
+const UpgradeModel = require('../model/UpgradeModel');
+
+const Validation = require('../utils/Validation');
+const checkValidate = require('../utils/checkValidate');
 
 const { Console } = require('@woowacourse/mission-utils');
 const MiniGame = require('./MiniGame');

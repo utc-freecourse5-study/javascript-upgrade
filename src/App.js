@@ -1,4 +1,4 @@
-const UpgradeGame = require('./UpgradeGame');
+const UpgradeGame = require('./controller/UpgradeGame');
 
 class App {
   #upgradeGame;

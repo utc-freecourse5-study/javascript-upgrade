@@ -1,4 +1,4 @@
-const generateMiniGameNumber = require('./generateMiniGameNumber');
+const generateMiniGameNumber = require('../generateMiniGameNumber');
 
 class UpgradeModel {
   #upgradePhase;
