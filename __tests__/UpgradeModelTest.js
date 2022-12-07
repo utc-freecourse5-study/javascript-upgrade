@@ -53,14 +53,30 @@ describe('UpgradeModel Test', () => {
     });
   });
 
-  describe('강화등급 Test', () => {
-    test('현재 강화 등급 Test', () => {
-      upgradeModel.addUpgradePhase();
-      upgradeModel.addUpgradePhase();
-      upgradeModel.addUpgradePhase();
+  describe('미니게임의 숫자를 맞췄는지 Test', () => {
+    test('미니게임 숫자를 맞춘경우 Test', () => {
+      mockRandoms([7]);
 
-      const result = upgradeModel.getCurrentUpgradePhase();
-      expect(result).toBe(3);
+      upgradeModel.makeRandomNumber();
+      const result = upgradeModel.isCorrectMiniGameNumber(7);
+      expect(result).toBeTruthy();
     });
+
+    test('미니게임 숫자를 틀린경우 Test', () => {
+      mockRandoms([6]);
+
+      upgradeModel.makeRandomNumber();
+      const result = upgradeModel.isCorrectMiniGameNumber(7);
+      expect(result).toBeFalsy();
+    });
+  });
+
+  test('현재 강화 등급 Test', () => {
+    upgradeModel.addUpgradePhase();
+    upgradeModel.addUpgradePhase();
+    upgradeModel.addUpgradePhase();
+
+    const result = upgradeModel.getCurrentUpgradePhase();
+    expect(result).toBe(3);
   });
 });
