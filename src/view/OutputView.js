@@ -6,12 +6,12 @@ const OutputView = {
     Console.print(OUTPUT_MESSAGE.start);
   },
 
-  printCurrentUpgradePhase(phase) {
-    Console.print(OUTPUT_MESSAGE.currentUpgradePhase(phase));
+  printCurrentUpgradeGrade(grade) {
+    Console.print(OUTPUT_MESSAGE.currentUpgradeGrade(grade));
   },
 
-  printFinalUpgradePhase(phase) {
-    Console.print(OUTPUT_MESSAGE.finalUpgradePhase(phase));
+  printFinalUpgradeGrade(grade) {
+    Console.print(OUTPUT_MESSAGE.finalUpgradeGrade(grade));
   },
 
   printMiniGameSuccess(type, randomNum, bonus) {

@@ -21,8 +21,8 @@ class UpgradeGame {
   }
 
   start() {
-    const currentUpgradePhase = this.#upgradeModel.getCurrentUpgradePhase();
-    OutputView.printCurrentUpgradePhase(currentUpgradePhase);
+    const currentUpgradeGrade = this.#upgradeModel.getCurrentUpgradeGrade();
+    OutputView.printCurrentUpgradeGrade(currentUpgradeGrade);
     this.#requestChallengeCommand();
   }
 
@@ -56,7 +56,6 @@ class UpgradeGame {
     const miniGameModel = new MiniGameModel();
     const miniGame = new MiniGame(miniGameModel);
     const result = miniGame.play(inputMiniGame);
-
     miniGame.printResult(result);
     this.#upgradeGameResult(result.bonus);
   }
@@ -68,7 +67,7 @@ class UpgradeGame {
   }
 
   #handleGameSuccess(probability) {
-    this.#upgradeModel.addUpgradePhase();
+    this.#upgradeModel.addUpgradeGrade();
     OutputView.printResult(GAME_RESULT.success, probability);
     this.#requstRetryOrQuit();
   }
@@ -79,7 +78,7 @@ class UpgradeGame {
   }
 
   #requstRetryOrQuit() {
-    OutputView.printCurrentUpgradePhase(this.#upgradeModel.getCurrentUpgradePhase());
+    OutputView.printCurrentUpgradeGrade(this.#upgradeModel.getCurrentUpgradeGrade());
     InputView.readChallengeCommand(this.#checkRetryOrQuit);
   }
 
@@ -98,8 +97,8 @@ class UpgradeGame {
   }
 
   #handleFinish() {
-    const currentUpgradePhase = this.#upgradeModel.getCurrentUpgradePhase();
-    OutputView.printFinalUpgradePhase(currentUpgradePhase);
+    const currentUpgradeGrade = this.#upgradeModel.getCurrentUpgradeGrade();
+    OutputView.printFinalUpgradeGrade(currentUpgradeGrade);
     return Console.close();
   }
 }

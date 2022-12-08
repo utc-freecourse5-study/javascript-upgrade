@@ -1,23 +1,23 @@
 const { UPGRADE_PROBABILITY } = require('../utils/constants');
 
 class UpgradeModel {
-  #upgradePhase;
+  #upgradeGrade;
 
   constructor() {
-    this.#upgradePhase = 0;
+    this.#upgradeGrade = 0;
   }
 
-  getCurrentUpgradePhase() {
-    return this.#upgradePhase;
+  getCurrentUpgradeGrade() {
+    return this.#upgradeGrade;
   }
 
-  addUpgradePhase() {
-    this.#upgradePhase += 1;
+  addUpgradeGrade() {
+    this.#upgradeGrade += 1;
   }
 
   addBonusProbability(bonus) {
     const upgradeProbability = UPGRADE_PROBABILITY;
-    const sumBonus = upgradeProbability[this.#upgradePhase] + bonus;
+    const sumBonus = upgradeProbability[this.#upgradeGrade] + bonus;
     return sumBonus >= 100 ? 100 : sumBonus;
   }
 }
