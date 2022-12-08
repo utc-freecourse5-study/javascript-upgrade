@@ -35,8 +35,7 @@ class UpgradeGame {
       this.#requestChallengeCommand();
       return;
     }
-
-    this.#requestMiniGameInput();
+    this.#handleRetryOrQuit(selectChallenge);
   };
 
   #requestMiniGameInput() {
@@ -56,6 +55,7 @@ class UpgradeGame {
     const miniGameModel = new MiniGameModel();
     const miniGame = new MiniGame(miniGameModel);
     const result = miniGame.play(inputMiniGame);
+
     miniGame.printResult(result);
     this.#upgradeGameResult(result.bonus);
   }
