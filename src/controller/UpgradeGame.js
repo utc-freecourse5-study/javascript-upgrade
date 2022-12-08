@@ -10,6 +10,7 @@ const checkValidate = require('../utils/checkValidate');
 const { Console } = require('@woowacourse/mission-utils');
 const MiniGame = require('./MiniGame');
 const { GAME_RESULT, INPUT_VALUE } = require('../utils/constants');
+const MiniGameModel = require('../model/MiniGameModel');
 
 class UpgradeGame {
   #upgradeModel;
@@ -21,7 +22,8 @@ class UpgradeGame {
 
   start() {
     const currentUpgradePhase = this.#upgradeModel.getCurrentUpgradePhase();
-    OutputView.printCurrentUpgradePhase(currentUpgradePhase) || this.#requestChallengeCommand();
+    OutputView.printCurrentUpgradePhase(currentUpgradePhase);
+    this.#requestChallengeCommand();
   }
 
   #requestChallengeCommand() {
@@ -30,7 +32,8 @@ class UpgradeGame {
 
   #checkChallengeCommand = (selectChallenge) => {
     if (!checkValidate(Validation.isTryChallenge, selectChallenge)) {
-      return this.#requestChallengeCommand();
+      this.#requestChallengeCommand();
+      return;
     }
 
     this.#requestMiniGameInput();
@@ -42,12 +45,21 @@ class UpgradeGame {
 
   #checkMiniGameInput = (inputMiniGame) => {
     if (!checkValidate(Validation.checkMiniGameInput, inputMiniGame)) {
-      return this.#requestMiniGameInput();
+      this.#requestMiniGameInput();
+      return;
     }
 
-    const bonus = new MiniGame(this.#upgradeModel).handleMiniGameInput(inputMiniGame);
-    this.#upgradeGameResult(bonus);
+    this.#handleMinigGame(inputMiniGame);
   };
+
+  #handleMinigGame(inputMiniGame) {
+    const miniGameModel = new MiniGameModel();
+    const miniGame = new MiniGame(miniGameModel);
+    const result = miniGame.play(inputMiniGame);
+
+    miniGame.printResult(result);
+    this.#upgradeGameResult(result.bonus);
+  }
 
   #upgradeGameResult(bonus) {
     const probability = this.#upgradeModel.addBonusProbability(bonus);
@@ -57,11 +69,13 @@ class UpgradeGame {
 
   #handleGameSuccess(probability) {
     this.#upgradeModel.addUpgradePhase();
-    return OutputView.printResult(GAME_RESULT.success, probability) || this.#requstRetryOrQuit();
+    OutputView.printResult(GAME_RESULT.success, probability);
+    this.#requstRetryOrQuit();
   }
 
   #handleGameFail(probability) {
-    OutputView.printResult(GAME_RESULT.fail, probability) || this.#handleFinish();
+    OutputView.printResult(GAME_RESULT.fail, probability);
+    this.#handleFinish();
   }
 
   #requstRetryOrQuit() {
@@ -71,7 +85,8 @@ class UpgradeGame {
 
   #checkRetryOrQuit = (selectChallenge) => {
     if (!checkValidate(Validation.isTryChallenge, selectChallenge)) {
-      return this.requestChallengeCommand();
+      this.requestChallengeCommand();
+      return;
     }
 
     this.#handleRetryOrQuit(selectChallenge);
@@ -84,7 +99,8 @@ class UpgradeGame {
 
   #handleFinish() {
     const currentUpgradePhase = this.#upgradeModel.getCurrentUpgradePhase();
-    return OutputView.printFinalUpgradePhase(currentUpgradePhase) || Console.close();
+    OutputView.printFinalUpgradePhase(currentUpgradePhase);
+    return Console.close();
   }
 }
 

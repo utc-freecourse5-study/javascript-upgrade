@@ -2,35 +2,35 @@ const { GAME_TYPE, BONUS_PROBABILITY, INPUT_VALUE } = require('../utils/constant
 const OutputView = require('../view/OutputView');
 
 class MiniGame {
-  constructor(upgradeModel) {
-    this.upgradeModel = upgradeModel;
+  #miniGameModel;
+
+  constructor(miniGameModel) {
+    this.#miniGameModel = miniGameModel;
+    this.#miniGameModel.makeRandomNumber();
   }
 
-  handleMiniGameInput(inputMiniGame) {
-    this.upgradeModel.makeRandomNumber();
-
+  play(inputMiniGame) {
     return inputMiniGame === INPUT_VALUE.odd || inputMiniGame === INPUT_VALUE.even
       ? this.#handleOddAndEven(inputMiniGame)
       : this.#handleMiniGameNumber(inputMiniGame);
   }
 
   #handleOddAndEven(inputMiniGame) {
-    return this.upgradeModel.isOddAndEven(inputMiniGame)
-      ? this.#handleMiniGameResult(true, GAME_TYPE.oddAndEven, BONUS_PROBABILITY.oddAndEvenSuccess)
-      : this.#handleMiniGameResult(false, GAME_TYPE.oddAndEven, BONUS_PROBABILITY.fail);
+    return this.#miniGameModel.isOddAndEven(inputMiniGame)
+      ? { result: true, type: GAME_TYPE.oddAndEven, bonus: BONUS_PROBABILITY.oddAndEvenSuccess }
+      : { result: false, type: GAME_TYPE.oddAndEven, bonus: BONUS_PROBABILITY.fail };
   }
 
   #handleMiniGameNumber(inputMiniGame) {
-    return this.upgradeModel.isCorrectMiniGameNumber(Number(inputMiniGame))
-      ? this.#handleMiniGameResult(true, GAME_TYPE.number, BONUS_PROBABILITY.numberSuccess)
-      : this.#handleMiniGameResult(false, GAME_TYPE.number, BONUS_PROBABILITY.fail);
+    return this.#miniGameModel.isCorrectMiniGameNumber(Number(inputMiniGame))
+      ? { result: true, type: GAME_TYPE.number, bonus: BONUS_PROBABILITY.numberSuccess }
+      : { result: false, type: GAME_TYPE.number, bonus: BONUS_PROBABILITY.fail };
   }
 
-  #handleMiniGameResult(result, type, bonus) {
+  printResult({ result, type, bonus }) {
     result
-      ? OutputView.printMiniGameSuccess(type, this.upgradeModel.getRandomNumber(), bonus)
-      : OutputView.printMiniGameFail(type, this.upgradeModel.getRandomNumber());
-    return bonus;
+      ? OutputView.printMiniGameSuccess(type, this.#miniGameModel.getRandomNumber(), bonus)
+      : OutputView.printMiniGameFail(type, this.#miniGameModel.getRandomNumber());
   }
 }
 
