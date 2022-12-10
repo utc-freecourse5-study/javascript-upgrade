@@ -35,8 +35,13 @@ class UpgradeGame {
       this.#requestChallengeCommand();
       return;
     }
+
     this.#handleRetryOrQuit(selectChallenge);
   };
+
+  #handleRetryOrQuit(selectChallenge) {
+    selectChallenge === INPUT_VALUE.challenge ? this.#requestMiniGameInput() : this.#handleFinish();
+  }
 
   #requestMiniGameInput() {
     InputView.readMiniGameInput(this.#checkMiniGameInput);
@@ -79,27 +84,13 @@ class UpgradeGame {
 
   #requstRetryOrQuit() {
     OutputView.printCurrentUpgradeGrade(this.#upgradeModel.getCurrentUpgradeGrade());
-    InputView.readChallengeCommand(this.#checkRetryOrQuit);
-  }
-
-  #checkRetryOrQuit = (selectChallenge) => {
-    if (!checkValidate(Validation.isTryChallenge, selectChallenge)) {
-      this.requestChallengeCommand();
-      return;
-    }
-
-    this.#handleRetryOrQuit(selectChallenge);
-  };
-
-  #handleRetryOrQuit(selectChallenge) {
-    if (selectChallenge === INPUT_VALUE.challenge) return this.#requestMiniGameInput();
-    this.#handleFinish();
+    InputView.readChallengeCommand(this.#checkChallengeCommand);
   }
 
   #handleFinish() {
     const currentUpgradeGrade = this.#upgradeModel.getCurrentUpgradeGrade();
     OutputView.printFinalUpgradeGrade(currentUpgradeGrade);
-    return Console.close();
+    Console.close();
   }
 }
 
