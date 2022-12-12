@@ -10,6 +10,12 @@ class MiniGame {
   }
 
   play(inputMiniGame) {
+    const result = this.#handleMiniGame(inputMiniGame);
+    this.printResult(result);
+    return result;
+  }
+
+  #handleMiniGame(inputMiniGame) {
     return inputMiniGame === INPUT_VALUE.odd || inputMiniGame === INPUT_VALUE.even
       ? this.#handleOddAndEven(inputMiniGame)
       : this.#handleMiniGameNumber(inputMiniGame);

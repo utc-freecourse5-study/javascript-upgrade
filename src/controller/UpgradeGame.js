@@ -59,10 +59,9 @@ class UpgradeGame {
   #handleMinigGame(inputMiniGame) {
     const miniGameModel = new MiniGameModel();
     const miniGame = new MiniGame(miniGameModel);
-    const result = miniGame.play(inputMiniGame);
+    const { bonus } = miniGame.play(inputMiniGame);
 
-    miniGame.printResult(result);
-    this.#upgradeGameResult(result.bonus);
+    this.#upgradeGameResult(bonus);
   }
 
   #upgradeGameResult(bonus) {

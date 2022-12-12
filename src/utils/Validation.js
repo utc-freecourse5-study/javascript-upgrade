@@ -3,25 +3,24 @@ const { ERROR_MESSAGE } = require('./message');
 
 const Validation = {
   isTryChallenge(selectChallenge) {
-    if (selectChallenge === INPUT_VALUE.challenge || selectChallenge === INPUT_VALUE.quit) {
-      return true;
+    if (selectChallenge !== INPUT_VALUE.challenge && selectChallenge !== INPUT_VALUE.quit) {
+      throw new Error(ERROR_MESSAGE.isTryChallenge);
     }
-    throw new Error(ERROR_MESSAGE.isTryChallenge);
   },
 
   checkMiniGameInput(inputMiniGame) {
     if (
-      Validation.checkMiniGameNumber(inputMiniGame) ||
-      Validation.checkMiniGameOddAndEven(inputMiniGame)
+      !Validation.checkMiniGameNumber(inputMiniGame) &&
+      !Validation.checkMiniGameOddAndEven(inputMiniGame)
     ) {
-      return true;
+      throw new Error(ERROR_MESSAGE.validateMinigameInput);
     }
-    throw new Error(ERROR_MESSAGE.validateMinigameInput);
   },
 
   checkMiniGameNumber(inputMiniGame) {
-    if (new RegExp(REGEXP.singleDigit).test(inputMiniGame) && inputMiniGame.length === 1)
+    if (new RegExp(REGEXP.singleDigit).test(inputMiniGame) && inputMiniGame.length === 1) {
       return true;
+    }
     return false;
   },
 
