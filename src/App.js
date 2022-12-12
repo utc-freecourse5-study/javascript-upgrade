@@ -1,5 +1,15 @@
+const UpgradeGame = require('./controller/UpgradeGame');
+
 class App {
-  play() {}
+  constructor() {
+    this.upgradeGame = new UpgradeGame();
+  }
+
+  play() {
+    this.upgradeGame.start();
+  }
 }
+const app = new App();
+app.play();
 
 module.exports = App;
