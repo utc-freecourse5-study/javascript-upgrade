@@ -51,4 +51,15 @@ describe("업그레이드 게임 테스트", () => {
     expect(firstResultIsEven).toBeTruthy();
     expect(secondResultIsOdd).toBeFalsy();
   });
+
+  test("숫자 맞추기 미니 게임 테스트", () => {
+    mockRandoms([2, 5]);
+
+    const upgradeGame = new UpgradeGame();
+    const { result: firstResultIsEven } = upgradeGame.playNumberGame("2");
+    const { result: secondResultIsOdd } = upgradeGame.playNumberGame("4");
+
+    expect(firstResultIsEven).toBeTruthy();
+    expect(secondResultIsOdd).toBeFalsy();
+  });
 });
