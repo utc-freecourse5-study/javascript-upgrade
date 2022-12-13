@@ -1,10 +1,8 @@
-const generateMiniGameNumber = require("./generateMiniGameNumber");
-
 class MiniGame {
   #answer;
 
-  constructor() {
-    this.#answer = generateMiniGameNumber();
+  constructor(answer) {
+    this.#answer = answer;
   }
 
   playNumberGame(number) {
