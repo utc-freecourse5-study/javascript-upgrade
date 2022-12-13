@@ -40,4 +40,15 @@ describe("업그레이드 게임 테스트", () => {
 
     expect(isSuccess).toBeFalsy();
   });
+
+  test("홀짝 맞추기 미니 게임 테스트", () => {
+    mockRandoms([2, 2]);
+
+    const upgradeGame = new UpgradeGame();
+    const { result: firstResultIsEven } = upgradeGame.playOddGame("E");
+    const { result: secondResultIsOdd } = upgradeGame.playOddGame("O");
+
+    expect(firstResultIsEven).toBeTruthy();
+    expect(secondResultIsOdd).toBeFalsy();
+  });
 });
