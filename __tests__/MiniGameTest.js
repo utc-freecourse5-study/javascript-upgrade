@@ -10,4 +10,14 @@ describe("미니 게임 테스트", () => {
     expect(fistResult).toBeTruthy();
     expect(secondResult).toBeFalsy();
   });
+
+  test("홀짝 맞추기 미니 게임 테스트", () => {
+    const miniGame = new MiniGame(5);
+
+    const fistResult = miniGame.playOddGame("O");
+    const secondResult = miniGame.playOddGame("E");
+
+    expect(fistResult).toBeTruthy();
+    expect(secondResult).toBeFalsy();
+  });
 });
