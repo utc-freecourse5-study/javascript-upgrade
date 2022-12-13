@@ -12,6 +12,10 @@ class UpgradeGame {
     this.#probability = this.#initProbability();
   }
 
+  getLevel() {
+    return this.#level;
+  }
+
   #initProbability() {
     if (this.#level > 9) {
       this.#probability = 10;
@@ -26,7 +30,7 @@ class UpgradeGame {
       this.#probability += this.#initProbability();
       return { isSuccess: true, probability: this.#probability };
     }
-    return { isSuccess: false, probability: this.#probability, level: this.#level };
+    return { isSuccess: false, probability: this.#probability };
   }
 
   #addProbability(probability) {
