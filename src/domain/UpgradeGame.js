@@ -1,7 +1,7 @@
-const generateMiniGameNumber = require("./generateMiniGameNumber");
+const generateMiniGameNumber = require("../utils/generateMiniGameNumber");
 const MiniGame = require("./MiniGame");
-const probability = require("./Probability");
-const UpgradeUtils = require("./UpgradeUtils");
+const probability = require("../utils/probability");
+const UpgradeUtils = require("../utils/UpgradeUtils");
 
 class UpgradeGame {
   #level;

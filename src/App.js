@@ -1,8 +1,8 @@
 const MissionUtils = require("@woowacourse/mission-utils");
-const InputValidator = require("./InputValidator");
-const InputView = require("./InputView");
-const OutputView = require("./OutputView");
-const UpgradeGame = require("./UpgradeGame");
+const InputValidator = require("./utils/InputValidator");
+const InputView = require("./view/InputView");
+const OutputView = require("./view/OutputView");
+const UpgradeGame = require("./domain/UpgradeGame");
 
 class App {
   #UpgradeGame;
