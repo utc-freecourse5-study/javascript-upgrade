@@ -2,7 +2,7 @@ const MissionUtils = require("@woowacourse/mission-utils");
 
 const OutputView = {
   printOpening() {
-    MissionUtils.Console.print("무기 강화 겡미을 시작합니다.");
+    MissionUtils.Console.print("무기 강화 게임을 시작합니다.");
   },
 
   printCurrentLevel(level) {
@@ -11,6 +11,10 @@ const OutputView = {
 
   printFinalResult(level) {
     MissionUtils.Console.print(`최종 강화 결과: +${level}강`);
+  },
+
+  printUpgradeResult(percent, isSuccess) {
+    MissionUtils.Console.print(`강화 ${isSuccess ? "성공!" : "실패!"} (강화 확률 ${percent}%)`);
   },
 
   printNumberGameResult(randomNumber, isSuccess) {
