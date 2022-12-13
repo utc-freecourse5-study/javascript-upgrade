@@ -24,9 +24,9 @@ class UpgradeGame {
     if (UpgradeUtils.isUpgraded(this.#probability)) {
       this.#level += 1;
       this.#probability += this.#initProbability();
-      return true;
+      return { isSuccess: true, probability: this.#probability };
     }
-    return false;
+    return { isSuccess: false, probability: this.#probability, level: this.#level };
   }
 
   #addProbability(probability) {
