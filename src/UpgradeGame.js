@@ -9,19 +9,27 @@ class UpgradeGame {
 
   constructor() {
     this.#level = 0;
+    this.#probability = this.#initProbability();
+  }
+
+  #initProbability() {
+    if (this.#level > 9) {
+      this.#probability = 10;
+      return;
+    }
     this.#probability = probability[this.#level + 1];
   }
 
   upgrade() {
     if (UpgradeUtils.isUpgraded(this.#probability)) {
       this.#level += 1;
-      this.#probability += probability[this.#level + 1];
+      this.#probability += this.#initProbability();
       return true;
     }
     return false;
   }
 
-  addProbability(probability) {
+  #addProbability(probability) {
     if (this.#probability + probability > 100) {
       this.#probability = 100;
       return;
@@ -35,7 +43,7 @@ class UpgradeGame {
     const miniGame = new MiniGame(randomNumber);
     const result = miniGame.playOddGame(command);
 
-    if (result) this.addProbability(10);
+    if (result) this.#addProbability(10);
 
     return { answer: randomNumber, result: result };
   }
@@ -45,7 +53,7 @@ class UpgradeGame {
     const miniGame = new MiniGame(randomNumber);
     const result = miniGame.playNumberGame(number);
 
-    if (result) this.addProbability(50);
+    if (result) this.#addProbability(50);
 
     return { answer: randomNumber, result: result };
   }
