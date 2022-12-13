@@ -11,12 +11,21 @@ class UpgradeGame {
     this.#probability = probability[this.#level + 1];
   }
 
+  addProbability(probability) {
+    if (this.#probability + probability > 100) {
+      this.#probability = 100;
+      return;
+    }
+
+    this.#probability += probability;
+  }
+
   playOddGame(command) {
     const randomNumber = generateMiniGameNumber();
     const miniGame = new MiniGame(randomNumber);
     const result = miniGame.playOddGame(command);
 
-    if (result) this.#probability += 10;
+    if (result) this.addProbability(10);
 
     return { answer: randomNumber, result: result };
   }
@@ -26,7 +35,7 @@ class UpgradeGame {
     const miniGame = new MiniGame(randomNumber);
     const result = miniGame.playNumberGame(number);
 
-    if (result) this.#probability += 50;
+    if (result) this.addProbability(50);
 
     return { answer: randomNumber, result: result };
   }
