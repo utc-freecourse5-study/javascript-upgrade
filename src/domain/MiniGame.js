@@ -6,7 +6,7 @@ class MiniGame {
   }
 
   playNumberGame(number) {
-    return this.#answer === number;
+    return this.#answer === Number(number);
   }
 
   playOddGame(command) {
