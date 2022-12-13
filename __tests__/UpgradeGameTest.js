@@ -10,7 +10,7 @@ const mockRandoms = (numbers) => {
 
 describe("업그레이드 게임 테스트", () => {
   test("레벨 가져오기 테스트", () => {
-    mockRandoms([0, 0, 0]);
+    mockRandoms([0, 0]);
 
     const upgradeGame = new UpgradeGame();
     const zeroUpgrade = upgradeGame.getLevel();
@@ -21,5 +21,23 @@ describe("업그레이드 게임 테스트", () => {
 
     expect(zeroUpgrade).toEqual(0);
     expect(twoUpgrade).toEqual(2);
+  });
+
+  test("업그레이드 성공 테스트", () => {
+    mockRandoms([0]);
+
+    const upgradeGame = new UpgradeGame();
+    const { isSuccess } = upgradeGame.upgrade();
+
+    expect(isSuccess).toBeTruthy();
+  });
+
+  test("업그레이드 실패 테스트", () => {
+    mockRandoms([99]);
+
+    const upgradeGame = new UpgradeGame();
+    const { isSuccess } = upgradeGame.upgrade();
+
+    expect(isSuccess).toBeFalsy();
   });
 });
