@@ -1,6 +1,7 @@
 const generateMiniGameNumber = require("./generateMiniGameNumber");
 const MiniGame = require("./MiniGame");
 const probability = require("./Probability");
+const UpgradeUtils = require("./UpgradeUtils");
 
 class UpgradeGame {
   #level;
@@ -9,6 +10,15 @@ class UpgradeGame {
   constructor() {
     this.#level = 0;
     this.#probability = probability[this.#level + 1];
+  }
+
+  upgrade() {
+    if (UpgradeUtils.isUpgraded(this.#probability)) {
+      this.#level += 1;
+      this.#probability += probability[this.#level + 1];
+      return true;
+    }
+    return false;
   }
 
   addProbability(probability) {
