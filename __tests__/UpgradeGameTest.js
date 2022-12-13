@@ -45,21 +45,21 @@ describe("업그레이드 게임 테스트", () => {
     mockRandoms([2, 2]);
 
     const upgradeGame = new UpgradeGame();
-    const { result: firstResultIsEven } = upgradeGame.playOddGame("E");
-    const { result: secondResultIsOdd } = upgradeGame.playOddGame("O");
+    const { result: firstNumberIsEven } = upgradeGame.playOddGame("E");
+    const { result: secondNumberIsOdd } = upgradeGame.playOddGame("O");
 
-    expect(firstResultIsEven).toBeTruthy();
-    expect(secondResultIsOdd).toBeFalsy();
+    expect(firstNumberIsEven).toBeTruthy();
+    expect(secondNumberIsOdd).toBeFalsy();
   });
 
   test("숫자 맞추기 미니 게임 테스트", () => {
     mockRandoms([2, 5]);
 
     const upgradeGame = new UpgradeGame();
-    const { result: firstResultIsEven } = upgradeGame.playNumberGame("2");
-    const { result: secondResultIsOdd } = upgradeGame.playNumberGame("4");
+    const { result: firstNumberIsTwo } = upgradeGame.playNumberGame("2");
+    const { result: secondNumberIsFour } = upgradeGame.playNumberGame("4");
 
-    expect(firstResultIsEven).toBeTruthy();
-    expect(secondResultIsOdd).toBeFalsy();
+    expect(firstNumberIsTwo).toBeTruthy();
+    expect(secondNumberIsFour).toBeFalsy();
   });
 });
