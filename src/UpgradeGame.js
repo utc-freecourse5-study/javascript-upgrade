@@ -17,18 +17,17 @@ class UpgradeGame {
   }
 
   #initProbability() {
-    if (this.#level > 9) {
-      this.#probability = 10;
-      return;
-    }
-    this.#probability = probability[this.#level + 1];
+    if (this.#level > 9) return 10;
+
+    return probability[this.#level + 1];
   }
 
   upgrade() {
     if (UpgradeUtils.isUpgraded(this.#probability)) {
+      const prevProbability = this.#probability;
       this.#level += 1;
-      this.#probability += this.#initProbability();
-      return { isSuccess: true, probability: this.#probability };
+      this.#probability = this.#initProbability();
+      return { isSuccess: true, probability: prevProbability };
     }
     return { isSuccess: false, probability: this.#probability };
   }
