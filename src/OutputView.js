@@ -28,6 +28,10 @@ const OutputView = {
       `미니 게임 랜덤 수: ${randomNumber} --> 홀/짝 맞추기 ${isSuccess ? "성공! 강화 확률 10% 증가!" : "실패!"}`
     );
   },
+
+  printErrorMessage(error) {
+    MissionUtils.Console.print(error.message);
+  },
 };
 
 module.exports = OutputView;
