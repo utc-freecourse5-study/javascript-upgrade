@@ -1,52 +1,51 @@
 const generateMiniGameNumber = require("../utils/generateMiniGameNumber");
 const MiniGame = require("./MiniGame");
-const probability = require("../utils/probability");
-const UpgradeUtils = require("../utils/UpgradeUtils");
+const Weapon = require("./Weapon");
 
 class UpgradeGame {
-  #level;
-  #probability;
+  #weapon;
 
   constructor() {
-    this.#level = 0;
-    this.#probability = this.#initProbability();
+    this.#weapon = new Weapon();
   }
 
-  getLevel() {
-    return this.#level;
+  // #level;
+  // #probability;
+
+  // constructor() {
+  //   this.#level = 0;
+  //   this.#probability = this.#initProbability();
+  // }
+
+  getWeaponLevel() {
+    return this.#weapon.getLevel();
   }
 
-  #initProbability() {
-    if (this.#level > 9) return 10;
+  // #initProbability() {
+  //   if (this.#level > 9) return 10;
 
-    return probability[this.#level + 1];
+  //   return probability[this.#level + 1];
+  // }
+
+  weaponUpgrade() {
+    return this.#weapon.upgrade();
   }
 
-  upgrade() {
-    if (UpgradeUtils.isUpgraded(this.#probability)) {
-      const prevProbability = this.#probability;
-      this.#level += 1;
-      this.#probability = this.#initProbability();
-      return { isSuccess: true, probability: prevProbability };
-    }
-    return { isSuccess: false, probability: this.#probability };
-  }
+  // #addProbability(probability) {
+  //   if (this.#probability + probability > 100) {
+  //     this.#probability = 100;
+  //     return;
+  //   }
 
-  #addProbability(probability) {
-    if (this.#probability + probability > 100) {
-      this.#probability = 100;
-      return;
-    }
-
-    this.#probability += probability;
-  }
+  //   this.#probability += probability;
+  // }
 
   playOddGame(command) {
     const randomNumber = generateMiniGameNumber();
     const miniGame = new MiniGame(randomNumber);
     const result = miniGame.playOddGame(command);
 
-    if (result) this.#addProbability(10);
+    if (result) this.#weapon.addProbability(10);
 
     return { answer: randomNumber, result: result };
   }
@@ -56,7 +55,7 @@ class UpgradeGame {
     const miniGame = new MiniGame(randomNumber);
     const result = miniGame.playNumberGame(number);
 
-    if (result) this.#addProbability(50);
+    if (result) this.#weapon.addProbability(50);
 
     return { answer: randomNumber, result: result };
   }

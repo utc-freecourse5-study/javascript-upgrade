@@ -14,7 +14,7 @@ class App {
   }
 
   requestChallengeCommand() {
-    OutputView.printCurrentLevel(this.#UpgradeGame.getLevel());
+    OutputView.printCurrentLevel(this.#UpgradeGame.getWeaponLevel());
     InputView.readChallengeCommand((input) => {
       if (!this.tryValidate(InputValidator.validateChallengeInput, input)) {
         this.requestChallengeCommand();
@@ -47,7 +47,7 @@ class App {
   }
 
   upgrade() {
-    const { isSuccess, probability } = this.#UpgradeGame.upgrade();
+    const { isSuccess, probability } = this.#UpgradeGame.weaponUpgrade();
     OutputView.printUpgradeResult(probability, isSuccess);
 
     if (isSuccess) this.requestChallengeCommand();
@@ -55,7 +55,7 @@ class App {
   }
 
   end() {
-    OutputView.printFinalResult(this.#UpgradeGame.getLevel());
+    OutputView.printFinalResult(this.#UpgradeGame.getWeaponLevel());
     MissionUtils.Console.close();
   }
 
